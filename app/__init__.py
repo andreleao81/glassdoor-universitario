@@ -1,13 +1,24 @@
 from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS
-
-cors = CORS()
-# from flasgger import Swagger
-
+from .extensions import db, migrate, ma, cors
+from .config import Config
+from .controllers.UserController import user_api
+from .controllers.CollegeClasses import college_class_api
 
 def create_app():
     app = Flask(__name__)
+
+    app.config.from_object(Config)
     cors.init_app(app, resources={r"/*":{"origins":"*"}})
+
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+    ma.init_app(app)
+
+    #blueprints
+    app.register_blueprint(user_api)
+    app.register_blueprint(college_class_api)
+    
 
    # swagger = Swagger(app)
     # swagger = Swagger(app, template={
