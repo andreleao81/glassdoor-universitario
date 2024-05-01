@@ -1,0 +1,7 @@
+.vscode
+__pycache__
+.env
+app/sensive.py
+app/configlocal.py
+scripts/*
+venv/*
