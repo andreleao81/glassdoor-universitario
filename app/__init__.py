@@ -1,8 +1,13 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, json
 from .extensions import db, migrate, ma, cors
 from .config import Config
 from .controllers.UserController import user_api
 from .controllers.CollegeClasses import college_class_api
+from flasgger import Swagger
+from flask_swagger_ui import get_swaggerui_blueprint
+import yaml
+import werkzeug
+werkzeug.cached_property = werkzeug.utils.cached_property
 
 def create_app():
     app = Flask(__name__)
