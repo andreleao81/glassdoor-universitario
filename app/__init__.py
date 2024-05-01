@@ -1,9 +1,14 @@
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
+
+cors = CORS()
 # from flasgger import Swagger
 
 
 def create_app():
     app = Flask(__name__)
+    cors.init_app(app, resources={r"/*":{"origins":"*"}})
+
    # swagger = Swagger(app)
     # swagger = Swagger(app, template={
     #     "info": {  
@@ -18,8 +23,8 @@ def create_app():
         return render_template('swaggerui.html')
 
     @app.route('/')
-    def hello():
-        return 'Hello, World!'
+    def index():
+        return render_template('index.html')
     
     @app.route('/add_one/<int:number>')
 
