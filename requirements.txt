@@ -1,9 +1,2 @@
-Flask = "*"
-Flask-SQLAlchemy = "*"
-flask-marshmallow = "*"
-Flask-Mail = "*"
-Flask-JWT-Extended = "*"
-bcrypt = "*"
-marshmallow-sqlalchemy = "*"
-gunicorn = "*"
-Flask-Migrate = "*"
+Flask == 3.0.3 
+gunicorn == 20.0.4
