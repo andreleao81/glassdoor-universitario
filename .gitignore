@@ -5,3 +5,4 @@ app/sensive.py
 app/configlocal.py
 scripts/*
 venv/*
+migrations/*

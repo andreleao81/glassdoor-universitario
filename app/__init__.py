@@ -1,8 +1,12 @@
-from flask import Flask, request, jsonify, render_template, json
+from flask import Flask, request, jsonify, render_template
 from .extensions import db, migrate, ma, cors
 from .config import Config
 from .controllers.UserController import user_api
-from .controllers.CollegeClasses import college_class_api
+from .controllers.CollegeClassController import college_class_api
+from .controllers.ProfessorController import professor_api
+from .controllers.ProfessorEvaluationController import professor_evaluation_api
+from .controllers. ClassEvaluationController import college_class_evaluation_api
+
 from flasgger import Swagger
 from flask_swagger_ui import get_swaggerui_blueprint
 import yaml
@@ -15,14 +19,17 @@ def create_app():
     app.config.from_object(Config)
     cors.init_app(app, resources={r"/*":{"origins":"*"}})
 
-
+    ma.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
-    ma.init_app(app)
 
     #blueprints
     app.register_blueprint(user_api)
     app.register_blueprint(college_class_api)
+    app.register_blueprint(professor_api)
+    app.register_blueprint(professor_evaluation_api)
+    app.register_blueprint(college_class_evaluation_api)
+
     
 
    # swagger = Swagger(app)

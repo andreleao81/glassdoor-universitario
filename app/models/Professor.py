@@ -1,5 +1,5 @@
-from ..extensions import db
-from BaseModel import BaseModel
+from app.extensions import db
+from .BaseModel import BaseModel
 
 
 class ProfessorModel(BaseModel):

@@ -10,16 +10,34 @@ user_api = Blueprint('user_api', __name__)
 api = Api(user_api)
 
 @api.route('/user')
-class CreateUser(Resource):
+class UserCreateResource(Resource):
     def post(self):
         data = request.json
         user = UserSchema(**data)
         user.save()
         return jsonify(user), 201
 
+@api.route('/user/<int:id>') 
+class UserResource(Resource):
+    def get(self, id):
+        user = UserModel.query.get_or_404(id)
+        user_schema = UserSchema().dump(user)
+        return user_schema, 200
+
+    def put(self, id):
+        user = UserModel.query.get_or_404(id)
+        data = request.json
+        user.update(data)
+        return jsonify(user), 200
+    
+    def delete(self, id):
+        user = UserModel.query.get_or_404(id)
+        user.delete()
+        return '', 204
+
 @api.route('/users')
-class GetUsers(Resource):
+class UserListResource(Resource):
     def get(self):
         users = UserModel.query.all()
-        users = UserSchema(many=True).dump(users)
-        return users, 200
+        users_schema = UserSchema(many=True).dump(users)
+        return users_schema, 200

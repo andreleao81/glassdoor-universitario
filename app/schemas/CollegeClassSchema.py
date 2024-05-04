@@ -1,5 +1,5 @@
 from ..models.CollegeClassModel import CollegeClassModel
-from extensions import ma
+from ..extensions import ma
 
 
 class CollegeClassSchema(ma.SQLAlchemySchema):
@@ -10,5 +10,5 @@ class CollegeClassSchema(ma.SQLAlchemySchema):
     
     id = ma.Integer(dump_only=True)
     name = ma.String(required=True)
-    code = ma.String(required=True)
+    class_code = ma.String(required=True)
     semester = ma.String(required=True)

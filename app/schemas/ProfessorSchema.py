@@ -16,11 +16,11 @@ class ProfessorSchema(ma.SQLAlchemyAutoSchema):
         model = ProfessorModel
         load_instance = True
         include_fk = True
-        load_only = ['id']
+        # load_only = ['id']
         include_relationships = True
 
     id = ma.Integer(dump_only=True)
     name = ma.String(required=True)
-    # professor_evaluations = ma.Nested('ProfessorEvaluationSchema', many=True, exclude=('professor',))
+    professor_evaluations = ma.Nested('ProfessorEvaluationSchema', many=True, exclude=('professor_id',))
     
 
