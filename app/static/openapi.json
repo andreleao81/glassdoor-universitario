@@ -89,6 +89,128 @@
           }
         }
       }
+    },
+    "/professors": {
+      "get": {
+        "tags": [
+          "Professor"
+        ],
+        "description": "Returns a list of professors",
+        "responses": {
+          "200": {
+            "description": "List of professors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Professor"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/college_classes": {
+      "get": {
+        "tags": [
+          "CollegeClass"
+        ],
+        "description": "Returns a list of college classes",
+        "responses": {
+          "200": {
+            "description": "List of college classes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollegeClass"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/college_class_evaluations": {
+      "get": {
+        "tags": [
+          "CollegeClassEvaluation"
+        ],
+        "description": "Returns a list of college class evaluations",
+        "responses": {
+          "200": {
+            "description": "List of college class evaluations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollegeClassEvaluation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+     "/college_class_evaluation": {
+      "post": {
+        "tags": [
+          "CollegeClassEvaluation"
+        ],
+        "description": "Create a new college class evaluation",
+        "responses": {
+          "201": {
+            "description": "College class evaluation created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollegeClassEvaluation"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CollegeClassEvaluationPost"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/professor_evaluations": {
+      "get": {
+        "tags": [
+          "ProfessorEvaluation"
+        ],
+        "description": "Returns a list of professor evaluations",
+        "responses": {
+          "200": {
+            "description": "List of professor evaluations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfessorEvaluation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -115,7 +237,180 @@
           }
         },
         "required": ["username", "email", "password"]
+      },
+      "Professor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Professor ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Professor name"
+          },
+          "email": {
+            "type": "string",
+            "description": "Professor email"
+          }
+        },
+        "required": ["name", "email"]
+      },
+      "CollegeClass": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "College class ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "College class name"
+          },
+          "class_code": {
+            "type": "string",
+            "description": "College class code"
+          },
+          "semester": {
+            "type": "string",
+            "description": "Semester"
+          }
+        },
+        "required": ["name", "class_code", "semester"]
+      },
+      "ProfessorEvaluation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Professor evaluation ID"
+          },
+          "semester": {
+            "type": "integer",
+            "description": "Semester"
+          },
+          "attendance": {
+            "type": "integer",
+            "description": "Attendance"
+          },
+          "punctuality": {
+            "type": "integer",
+            "description": "Punctuality"
+          },
+          "availability_questions": {
+            "type": "integer",
+            "description": "Availability for questions"
+          },
+          "student_relationship": {
+            "type": "integer",
+            "description": "Student relationship"
+          },
+          "professor_methodology": {
+            "type": "integer",
+            "description": "Professor methodology"
+          },
+          "class_code": {
+            "type": "string",
+            "description": "Class code"
+          },
+          "user_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "User ID"
+          },
+          "professor_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Professor ID"
+          }
+        },
+        "required": ["semester", "attendance", "punctuality", "availability_questions", "student_relationship", "professor_methodology", "class_code", "user_id", "professor_id"]
+      },
+      "CollegeClassEvaluation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id"
+          },
+          "semester": {
+            "type": "integer",
+            "description": "Semester"
+          },
+          "lesson_exam_alingment": {
+            "type": "integer",
+            "description": "Lesson exam alignment"
+          },
+          "curriculum_exam_alingment": {
+            "type": "integer",
+            "description": "Curriculum exam alignment"
+          },
+          "difficulty": {
+            "type": "integer",
+            "description": "Difficulty"
+          },
+          "class_code": {
+            "type": "integer",
+            "description": "Class code"
+          },
+          "user_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "User ID"
+          },
+          "professor_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Professor ID"
+          }
+        },
+        "required": ["semester", "lesson_exam_alingment", "curriculum_exam_alingment", "difficulty", "class_code", "user_id", "professor_id"]
+      },
+      "CollegeClassEvaluationPost": {
+        "type": "object",
+        "properties": {
+          "semester": {
+            "type": "integer",
+            "description": "Semester"
+          },
+          "lesson_exam_alingment": {
+            "type": "integer",
+            "description": "Lesson exam alignment"
+          },
+          "curriculum_exam_alingment": {
+            "type": "integer",
+            "description": "Curriculum exam alignment"
+          },
+          "difficulty": {
+            "type": "integer",
+            "description": "Difficulty"
+          },
+          "class_code": {
+            "type": "string",
+            "description": "Class code"
+          },
+          "user_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "User ID"
+          },
+          "professor_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Professor ID"
+          }
+        },
+        "required": ["semester", "lesson_exam_alingment", "curriculum_exam_alingment", "difficulty", "class_code", "user_id", "professor_id"]
       }
     }
   }
 }
+
+
+    
+  
+  
+  

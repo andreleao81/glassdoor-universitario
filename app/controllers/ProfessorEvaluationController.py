@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_restx import Api, Resource
 
 from app.models.ProfessorEvaluation import ProfessorEvaluationModel
-from ..schemas.ProfessorEvaluation import ProfessorEvaluationSchema
+from ..schemas.ProfessorEvaluationSchema import ProfessorEvaluationSchema
 
 
 professor_evaluation_api = Blueprint('professor_evaluation_api', __name__)

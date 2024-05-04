@@ -29,14 +29,14 @@ class CollegeClassEvaluationSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         ordered = True
 
-    id = ma.Integer(dump_only=True)
+    id = ma.Integer(load_only=True)
     
     semester = ma.Integer(required=True) # add further validation
     lesson_exam_alingment = ma.Integer(required=True)
     curriculum_exam_alingment = ma.Integer(required=True)
     difficulty = ma.Integer(required=True)
    
-    class_code = ma.Integer(required=True)
+    class_code = ma.String(required=True)
     user_id = ma.Integer(required=True)
     professor_id = ma.Integer(required=True)    
 

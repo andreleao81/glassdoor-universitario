@@ -16,7 +16,7 @@ class ProfessorSchema(ma.SQLAlchemyAutoSchema):
         model = ProfessorModel
         load_instance = True
         include_fk = True
-        # load_only = ['id']
+        load_only = ['id']
         include_relationships = True
 
     id = ma.Integer(dump_only=True)

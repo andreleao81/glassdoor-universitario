@@ -1,5 +1,5 @@
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_restx import Api, Resource
 
 from app.models.ClassEvaluation import CollegeClassEvaluationModel
@@ -17,8 +17,11 @@ class CollegeClassEvaluationListResource(Resource):
     
 @api.route('/college_class_evaluation')
 class CollegeClassEvaluationResource(Resource):
-    def post(self, request):
-        data = request.json
-        college_class_evaluation = CollegeClassEvaluationSchema(**data)
+    print("Hello")
+
+    def post(self):
+        print("Hello2")
+        data = request.get_json()
+        college_class_evaluation = CollegeClassEvaluationSchema().load(data)
         college_class_evaluation.save()
-        return jsonify(college_class_evaluation), 201
+        return CollegeClassEvaluationSchema().dump(college_class_evaluation), 201
