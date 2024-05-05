@@ -8,7 +8,7 @@
 #     id = db.Column(db.Integer, primary_key=True)
 #     name = db.Column(db.String(60), nullable=False)
     
-from ..models.Professor import ProfessorModel
+from ..models.ProfessorModel import ProfessorModel
 from ..extensions import ma
 
 class ProfessorSchema(ma.SQLAlchemyAutoSchema):

@@ -4,8 +4,6 @@ from .config import Config
 from .controllers.UserController import user_api
 from .controllers.CollegeClassController import college_class_api
 from .controllers.ProfessorController import professor_api
-from .controllers.ProfessorEvaluationController import professor_evaluation_api
-from .controllers. ClassEvaluationController import college_class_evaluation_api
 
 from flasgger import Swagger
 from flask_swagger_ui import get_swaggerui_blueprint
@@ -27,9 +25,7 @@ def create_app():
     app.register_blueprint(user_api)
     app.register_blueprint(college_class_api)
     app.register_blueprint(professor_api)
-    app.register_blueprint(professor_evaluation_api)
-    app.register_blueprint(college_class_evaluation_api)
-
+    
     
 
    # swagger = Swagger(app)
@@ -45,32 +41,11 @@ def create_app():
     def get_docs():
         return render_template('swaggerui.html')
 
-    @app.route('/')
-    def index():
-        return render_template('index.html')
+    # @app.route('/')
+    # def index():
+    #     return render_template('index.html')
     
-    @app.route('/add_one/<int:number>')
 
-    def add_one(number):
-        """
-        Add one to a number
-        ---
-        parameters:
-          - name: number
-            in: path
-            type: integer
-            required: true
-        responses:
-          200:
-            description: The input number plus one
-        """
-        return {'result': number + 1}   
-    
-    @app.route('/api')
-    def get_api():
-        hello_dict = {'en': 'Hello', 'es': 'Hola', 'pt-br': 'Ahola'}
-        lang = request.args.get('lang')
-        return jsonify(hello_dict[lang])
 
    
     # with app.app_context():

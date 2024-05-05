@@ -9,7 +9,7 @@ class UserSchema(ma.SQLAlchemySchema):
     
     id = ma.Integer(dump_only=True)
     username = ma.String(required=True)
-    email = ma.Email(required=True)
+    email = ma.Email(load_only=True, required=True)
     password = ma.String(load_only=True, required=True)
 
 # class UsersSchemas(ma.SQLAlchemySchema):

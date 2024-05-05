@@ -211,6 +211,38 @@
           }
         }
       }
+    },
+    "/professor_evaluation": {
+      "post": {
+        "tags": [
+          "ProfessorEvaluation"
+        ],
+        "description": "Creates a new professor evaluation",
+        "responses": {
+          "200": {
+            "description": "Professor evaluation created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfessorEvaluationPost"
+                  }
+                }
+              }
+            }
+          }
+        },"requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProfessorEvaluationPost"
+                  }
+                }
+              },
+              "required": true
+            }
+      }
     }
   },
   "components": {
@@ -288,6 +320,50 @@
             "format": "int64",
             "description": "Professor evaluation ID"
           },
+          "semester": {
+            "type": "integer",
+            "description": "Semester"
+          },
+          "attendance": {
+            "type": "integer",
+            "description": "Attendance"
+          },
+          "punctuality": {
+            "type": "integer",
+            "description": "Punctuality"
+          },
+          "availability_questions": {
+            "type": "integer",
+            "description": "Availability for questions"
+          },
+          "student_relationship": {
+            "type": "integer",
+            "description": "Student relationship"
+          },
+          "professor_methodology": {
+            "type": "integer",
+            "description": "Professor methodology"
+          },
+          "class_code": {
+            "type": "string",
+            "description": "Class code"
+          },
+          "user_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "User ID"
+          },
+          "professor_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Professor ID"
+          }
+        },
+        "required": ["semester", "attendance", "punctuality", "availability_questions", "student_relationship", "professor_methodology", "class_code", "user_id", "professor_id"]
+      },
+      "ProfessorEvaluationPost": {
+        "type": "object",
+        "properties": {
           "semester": {
             "type": "integer",
             "description": "Semester"

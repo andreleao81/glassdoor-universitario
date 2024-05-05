@@ -18,13 +18,13 @@ class ProfessorEvaluationModel(BaseModel):
     student_relationship = db.Column(db.Integer, nullable=False)
     professor_methodology = db.Column(db.Integer, nullable=False)
    
-    class_code = db.Column(db.String(10), db.ForeignKey('college_classes.class_code'), nullable=False)
+    class_code = db.Column(db.String(10), db.ForeignKey('college_classes.class_code'), nullable=False, index=True)
     college_class = db.Relationship('CollegeClassModel', backref='professor_evaluations') 
     
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
     user = db.Relationship('UserModel', backref='professor_evaluations')
     
-    professor_id = db.Column(db.Integer, db.ForeignKey('professors.id'), nullable=False)
+    professor_id = db.Column(db.Integer, db.ForeignKey('professors.id'), nullable=False, index=True)
     professor = db.Relationship('ProfessorModel', backref='professor_evaluations')
 
 

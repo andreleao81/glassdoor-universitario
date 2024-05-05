@@ -17,7 +17,7 @@
 #     professor_id = db.Relationship('Professor', backref='class_evaluations')
 
 
-from ..models.ClassEvaluation import CollegeClassEvaluationModel
+from ..models.ClassEvaluationModel import CollegeClassEvaluationModel
 from ..extensions import ma
 
 class CollegeClassEvaluationSchema(ma.SQLAlchemyAutoSchema):
