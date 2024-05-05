@@ -23,7 +23,7 @@ class CollegeClassListResource(Resource):
 # ----------------- EVALUATION -----------------
 
 
-@api.route('/college_class/<int:class_id>/evaluation/list')
+@api.route('/college_classes/<int:class_id>/evaluation')
 class CollegeClassEvaluationListResource(Resource):
 
     def get(self, class_id): # add pagination later
@@ -31,28 +31,29 @@ class CollegeClassEvaluationListResource(Resource):
         return response, 200
     
 
-@api.route('/college_class/<int:class_id>/evaluation/<int:user_id>')
+@api.route('/college_class/<string:class_id>/evaluation/<int:user_id>/<int:professor_id>')
 class CollegeClassEvaluationResource(Resource):
 
-    def post(self, user_id, class_id, professor_id):
-        response = create_class_eval(request.get_json(), class_id, user_id, professor_id)
+    def post(self, user_id, class_id):
+        response = create_class_eval(request.get_json(), class_id, user_id)
         return response, 201
     
     def get(self, class_id, user_id, professor_id):
-        response = get_class_eval(class_id, user_id, professor_id) 
+        class_eval = get_class_eval(class_id, user_id, professor_id) 
         
-        if response is None:
+        if class_eval is None:
             return None, 404
         
+        response = CollegeClassEvaluationSchema().dump(class_eval)
         return response, 200
         
-    def put(self, id, evaluation_id):
-        data = request.get_json()
-        college_class_evaluation = CollegeClassEvaluationModel.query.get_or_404(evaluation_id)
-        college_class_evaluation.update(data)
-        return CollegeClassEvaluationSchema().dump(college_class_evaluation), 200
+    # def put(self,  class_id, user_id, professor_id):
+    #     data = request.get_json()
+    #     college_class_evaluation = CollegeClassEvaluationModel.query.get_or_404(evaluation_id)
+    #     college_class_evaluation.update(data)
+    #     return CollegeClassEvaluationSchema().dump(college_class_evaluation), 200
 
-    def delete(self, id, evaluation_id):
-        college_class_evaluation = CollegeClassEvaluationModel.query.get_or_404(evaluation_id)
-        college_class_evaluation.delete()
-        return None, 204
+    # def delete(self, id, evaluation_id):
+    #     college_class_evaluation = CollegeClassEvaluationModel.query.get_or_404(evaluation_id)
+    #     college_class_evaluation.delete()
+    #     return None, 204

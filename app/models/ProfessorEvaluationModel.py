@@ -1,9 +1,9 @@
-import datetime
-import json
-
 from app.extensions import db
-from ..utils.DateTime import dateTime
 from .BaseModel import BaseModel
+from .ProfessorModel import ProfessorModel
+from .UserModel import UserModel
+from .CollegeClassModel import CollegeClassModel
+
 
 
 class ProfessorEvaluationModel(BaseModel):
@@ -19,13 +19,13 @@ class ProfessorEvaluationModel(BaseModel):
     professor_methodology = db.Column(db.Integer, nullable=False)
    
     class_code = db.Column(db.String(10), db.ForeignKey('college_classes.class_code'), nullable=False, index=True)
-    college_class = db.Relationship('CollegeClassModel', backref='professor_evaluations') 
+    college_class = db.Relationship(CollegeClassModel, backref='professor_evaluations') 
     
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
-    user = db.Relationship('UserModel', backref='professor_evaluations')
+    user = db.Relationship(UserModel, backref='professor_evaluations')
     
     professor_id = db.Column(db.Integer, db.ForeignKey('professors.id'), nullable=False, index=True)
-    professor = db.Relationship('ProfessorModel', backref='professor_evaluations')
+    professor = db.Relationship(ProfessorModel, backref='professor_evaluations')
 
 
 

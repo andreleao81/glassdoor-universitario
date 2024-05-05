@@ -4,6 +4,8 @@ from .ProfessorModel import ProfessorModel
 from .UserModel import UserModel
 from .CollegeClassModel import CollegeClassModel
 
+
+
 class CollegeClassEvaluationModel(BaseModel):
     __tablename__='class_evaluations'
     

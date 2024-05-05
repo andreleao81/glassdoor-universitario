@@ -7,4 +7,4 @@ class CollegeClassModel(BaseModel):
     id = db.Column(db.Integer, primary_key=True, index=True)
     name = db.Column(db.String(60), nullable=False)
     class_code = db.Column(db.String(60), unique=True, index=True)
-    semester = db.Column(db.Integer, nullable=False)
+    # semester = db.Column(db.Integer, nullable=False)

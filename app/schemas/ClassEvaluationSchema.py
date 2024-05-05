@@ -29,7 +29,7 @@ class CollegeClassEvaluationSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         ordered = True
 
-    id = ma.Integer(load_only=True)
+    id = ma.Integer(dump_only=True)
     
     semester = ma.Integer(required=True) # add further validation
     lesson_exam_alingment = ma.Integer(required=True)

@@ -90,29 +90,7 @@
         }
       }
     },
-    "/professors": {
-      "get": {
-        "tags": [
-          "Professor"
-        ],
-        "description": "Returns a list of professors",
-        "responses": {
-          "200": {
-            "description": "List of professors",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Professor"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
+    
     "/college_classes": {
       "get": {
         "tags": [
@@ -127,7 +105,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CollegeClass"
+                    "$ref": "#/components/schemas/CollegeClassSchema"
                   }
                 }
               }
@@ -136,10 +114,10 @@
         }
       }
     },
-    "/college_class_evaluations": {
+    "/college_class/{class_id}/evaluation/list": {
       "get": {
         "tags": [
-          "CollegeClassEvaluation"
+          "CollegeClass"
         ],
         "description": "Returns a list of college class evaluations",
         "responses": {
@@ -159,7 +137,7 @@
         }
       }
     }, 
-     "/college_class_evaluation": {
+     "/college_class/{class_id}/evaluation/{user_id}/{professor_id}": {
       "post": {
         "tags": [
           "CollegeClassEvaluation"
@@ -187,9 +165,81 @@
           },
           "required": true
         }
+      },
+      "get": {
+        "tags": [
+          "CollegeClassEvaluation"
+        ],
+        "description": "Returns a college class evaluation by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "class_id",
+            "required": true,
+            "description": "College class ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "description": "User ID",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "professor_id",
+            "required": true,
+            "description": "Professor ID",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "College class evaluation details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollegeClassEvaluation"
+                }
+              }
+            }
+          }
+        }
+      }
+
+
+    },
+    "/professors": {
+      "get": {
+        "tags": [
+          "Professor"
+        ],
+        "description": "Returns a list of professors",
+        "responses": {
+          "200": {
+            "description": "List of professors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Professor"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/professor_evaluations": {
+    "/professor/{prof_id}/evaluations": {
       "get": {
         "tags": [
           "ProfessorEvaluation"
@@ -212,7 +262,39 @@
         }
       }
     },
-    "/professor_evaluation": {
+    "/professor/{prof_id}/evaluation": {
+      "post": {
+        "tags": [
+          "ProfessorEvaluation"
+        ],
+        "description": "Creates a new professor evaluation",
+        "responses": {
+          "200": {
+            "description": "Professor evaluation created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfessorEvaluationPost"
+                  }
+                }
+              }
+            }
+          }
+        },"requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ProfessorEvaluationPost"
+                  }
+                }
+              },
+              "required": true
+            }
+      }
+    },
+    "/professor/{prof_id}/evaluation/{class_id}/{user_id}": {
       "post": {
         "tags": [
           "ProfessorEvaluation"
