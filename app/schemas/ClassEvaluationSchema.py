@@ -12,7 +12,7 @@ class CollegeClassEvaluationSchema(ma.SQLAlchemyAutoSchema):
 
     id = ma.Integer(dump_only=True)
     
-    semester = ma.Integer(required=True) # add further validation
+    semester_concluded = ma.Integer(required=True) # add further validation
     lesson_exam_alingment = ma.Integer(required=True)
     curriculum_exam_alingment = ma.Integer(required=True)
     difficulty = ma.Integer(required=True)

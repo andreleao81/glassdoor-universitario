@@ -11,7 +11,7 @@ class CollegeClassEvaluationModel(BaseModel):
     
     id = db.Column(db.Integer, primary_key=True)
     
-    semester = db.Column(db.Integer, nullable=False)
+    semester_concluded = db.Column(db.Integer, nullable=True)
 
     lesson_exam_alingment = db.Column(db.Integer, nullable=False)
     curriculum_exam_alingment = db.Column(db.Integer, nullable=False)
