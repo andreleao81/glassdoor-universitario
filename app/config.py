@@ -11,3 +11,5 @@ class Config:
     url = environ.get('DB_URI')
     url = url[:8] + "ql" + url[8:]
     SQLALCHEMY_DATABASE_URI = url
+    SQLALCHEMY_TRACK_MODIFICATIONS = environ.get('SQLALCHEMY_TRACK_MODIFICATIONS')
+    SQLALCHEMY_ECHO = environ.get('SQLALCHEMY_ECHO')

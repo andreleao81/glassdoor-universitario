@@ -13,4 +13,14 @@ class UserSchema(ma.SQLAlchemySchema):
     password = ma.String(load_only=True, required=True)
 
 
+class LoginSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = UserModel
+        load_instance = True
+        ordered = True
+        
+    username = ma.String(required=True)
+    password = ma.String(required=True)
+
+
 

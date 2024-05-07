@@ -14,17 +14,32 @@ user_api = Blueprint('user_api', __name__)
 api = Api(user_api)
 
 
-# region User
+#region Cadastro e Login
 
-@api.route('/user')
+@api.route('/cadastro')
 class UserCreateResource(Resource):
     def post(self):
+        print('inside post')
         data = request.get_json()
         user = UserSchema().load(data)
         user.save()
-        user_schema = UserSchema().dump(user), 201
+        user_schema = UserSchema().dump(user)
         return user_schema, 201
     
+@api.route('/login')
+class UserLoginResource(Resource):
+    def post(self):
+        data = request.get_json()
+        user = UserModel.query.filter_by(username=data['username']).first()
+        if user and user.check_password(data['password']):
+            #né segredo
+            return {'message': "Ceci n'est pas un token"}, 200 
+        return {'message': 'Invalid credentials'}, 401
+    
+# endregion
+    
+
+# region User
 
 @api.route('/user/<int:user_id>')
 class UserResource(Resource):
@@ -56,7 +71,6 @@ class UserListResource(Resource):
         return users_schema, 200
 
 # endregion
-
 
 
 # region User History
