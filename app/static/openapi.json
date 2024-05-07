@@ -28,7 +28,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserPost"
                 }
               }
             }
@@ -36,7 +36,7 @@
         }
       }
     },
-    "/user/{id}": {
+    "/user/{user_id}": {
       "get": {
         "tags": [
           "User"
@@ -44,25 +44,93 @@
         "description": "Returns a user by ID",
         "parameters": [
           {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "description": "User ID",
-            "schema": {
-              "type": "integer"
-            }
+        "in": "path",
+        "name": "user_id",
+        "required": true,
+        "description": "User ID",
+        "schema": {
+          "type": "integer"
+        }
           }
         ],
         "responses": {
           "200": {
-            "description": "User details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
+        "description": "User details",
+        "content": {
+          "application/json": {
+            "schema": {
+          "$ref": "#/components/schemas/User"
             }
+          }
+        }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "Updates a user by ID",
+        "parameters": [
+          {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "description": "User ID",
+        "schema": {
+          "type": "integer"
+        }
+          }
+        ],
+        "requestBody": {
+          "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+        "description": "User updated",
+        "content": {
+          "application/json": {
+            "schema": {
+          "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "description": "Deletes an user by ID",
+        "parameters": [
+          {
+        "in": "path",
+        "name": "user_id",
+        "required": true,
+        "description": "User ID",
+        "schema": {
+          "type": "integer"
+        }
+          }
+        ],
+        "responses": {
+          "204": {
+        "description": "User deleted",
+        "content": {
+          "application/json": {
+            "schema": {
+          "$ref": "#/components/schemas/User"
+            }
+          }
+        }
           }
         }
       }
@@ -90,7 +158,37 @@
         }
       }
     },
-    
+    "/user/{user_id}/history": {
+      "get": {
+        "tags": [
+          "User History"
+        ],
+        "description": "Returns a  hstory by user ID",
+        "parameters": [
+          {
+        "in": "path",
+        "name": "user_id",
+        "required": true,
+        "description": "User ID",
+        "schema": {
+          "type": "integer"
+        }
+          }
+        ],
+        "responses": {
+          "200": {
+        "description": "User history",
+        "content": {
+          "application/json": {
+            "schema": {
+          "$ref": "#/components/schemas/History"
+            }
+          }
+        }
+          }
+        }
+      }
+    },
     "/college_classes": {
       "get": {
         "tags": [
@@ -114,30 +212,7 @@
         }
       }
     },
-    "/college_class/{class_id}/evaluation/list": {
-      "get": {
-        "tags": [
-          "CollegeClass"
-        ],
-        "description": "Returns a list of college class evaluations",
-        "responses": {
-          "200": {
-            "description": "List of college class evaluations",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CollegeClassEvaluation"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }, 
-     "/college_class/{class_id}/evaluation/{user_id}/{professor_id}": {
+    "/college_class/evaluation": {
       "post": {
         "tags": [
           "CollegeClassEvaluation"
@@ -165,7 +240,32 @@
           },
           "required": true
         }
-      },
+      }
+    },
+    "/college_class/{class_id}/evaluations": {
+      "get": {
+        "tags": [
+          "CollegeClass"
+        ],
+        "description": "Returns a list of college class evaluations",
+        "responses": {
+          "200": {
+            "description": "List of college class evaluations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CollegeClassEvaluation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+     "/college_class/{class_id}/evaluation/{user_id}/{professor_id}": {
       "get": {
         "tags": [
           "CollegeClassEvaluation"
@@ -213,8 +313,6 @@
           }
         }
       }
-
-
     },
     "/professors": {
       "get": {
@@ -244,6 +342,17 @@
         "tags": [
           "ProfessorEvaluation"
         ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "prof_id",
+            "required": true,
+            "description": "Professor ID",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "description": "Returns a list of professor evaluations",
         "responses": {
           "200": {
@@ -262,7 +371,7 @@
         }
       }
     },
-    "/professor/{prof_id}/evaluation": {
+    "/professor/evaluation": {
       "post": {
         "tags": [
           "ProfessorEvaluation"
@@ -274,27 +383,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProfessorEvaluationPost"
-                  }
+                  "$ref": "#/components/schemas/ProfessorEvaluation"
                 }
               }
             }
           }
-        },"requestBody": {
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ProfessorEvaluationPost"
-                  }
-                }
-              },
-              "required": true
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfessorEvaluationPost"
+              }
             }
+          },
+          "required": true
+        }
       }
     },
-    "/professor/{prof_id}/evaluation/{class_id}/{user_id}": {
+    "/professor/{prof_id}/evaluation": {
       "post": {
         "tags": [
           "ProfessorEvaluation"
@@ -351,6 +458,56 @@
           }
         },
         "required": ["username", "email", "password"]
+      },
+      "UserPost": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "User name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password"
+          }
+        },
+        "required": ["username", "email", "password"]
+      },
+      "History": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "History ID"
+          },
+          "class_code": {
+            "type": "string",
+            "description": "Class code"
+          },
+          "semester": {
+            "type": "string",
+            "description": "Semester"
+          },
+          "conclusion": {
+            "type": "boolean",
+            "description": "Conclusion"
+          },
+          "attending": {
+            "type": "boolean",
+            "description": "Attending"
+          },
+          "user_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "User ID"
+          }
+        },
+        "required": ["class_code", "semester", "conclusion", "attending", "user_id"]
       },
       "Professor": {
         "type": "object",
@@ -566,9 +723,6 @@
     }
   }
 }
-
-
-    
   
   
   

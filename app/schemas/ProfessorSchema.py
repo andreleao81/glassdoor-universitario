@@ -1,13 +1,3 @@
-# from ..extensions import db
-# from ..models import BaseModel
-
-
-# class ProfessorModel(BaseModel):
-#     __tablename__='professors'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(60), nullable=False)
-    
 from ..models.ProfessorModel import ProfessorModel
 from ..extensions import ma
 

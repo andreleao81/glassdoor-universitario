@@ -32,7 +32,7 @@ class ProfessorEvaluationListResource(Resource):
         professor_evaluations = ProfessorEvaluationModel.query.filter(ProfessorEvaluationModel.professor_id == prof_id).all()
         return ProfessorEvaluationSchema(many=True).dump(professor_evaluations), 200
     
-@api.route('/professor/<int:prof_id>/evaluation/')
+@api.route('/professor/evaluation')
 class ProfessorEvaluationCreateResource(Resource):
     def post(self):
         data = request.get_json()

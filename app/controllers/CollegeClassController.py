@@ -1,5 +1,6 @@
-from flask_restx import Api, Resource
-from flask import Blueprint, request
+from flask_restx import Api, Resource, reqparse
+from flask import Blueprint, request, abort
+
 
 from app.models.CollegeClassModel import CollegeClassModel
 from ..schemas.CollegeClassSchema import CollegeClassSchema
@@ -12,8 +13,10 @@ from app.services.ClassEvaluationServices import *
 college_class_api = Blueprint('college_class_api', __name__)
 api = Api(college_class_api)
 
-@api.route('/college_class/list')
-class CollegeClassListResource(Resource):
+# ----------------- CLASS -----------------
+
+@api.route('/college_classes')
+class CollegeClassListResource(Resource): #ok
     def get(self):
         college_classes = CollegeClassModel.query.all()
         return CollegeClassSchema(many=True).dump(college_classes), 200
@@ -23,21 +26,27 @@ class CollegeClassListResource(Resource):
 # ----------------- EVALUATION -----------------
 
 
-@api.route('/college_classes/<int:class_id>/evaluation')
-class CollegeClassEvaluationListResource(Resource):
+@api.route('/college_class/<string:class_id>/evaluations')
+class CollegeClassEvaluationListResource(Resource): #ok 
 
-    def get(self, class_id): # add pagination later
+    def get(self , class_id): 
         response = get_class_evals(class_id)
         return response, 200
     
+@api.route('/college_class/evaluation')
+class CollegeClassEvaluationCreateResource(Resource): #ok
+    def post(self):
+        data = request.get_json()
 
-@api.route('/college_class/<string:class_id>/evaluation/<int:user_id>/<int:professor_id>')
-class CollegeClassEvaluationResource(Resource):
+        if data is None:
+            print('aborting')
+            abort(400, 'No data provided')
 
-    def post(self, user_id, class_id):
-        response = create_class_eval(request.get_json(), class_id, user_id)
+        response = create_class_eval(data)
         return response, 201
     
+@api.route('/college_class/<string:class_id>/evaluation/<int:user_id>/<int:professor_id>') #ok
+class CollegeClassEvaluationResource(Resource): #ok
     def get(self, class_id, user_id, professor_id):
         class_eval = get_class_eval(class_id, user_id, professor_id) 
         

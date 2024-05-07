@@ -3,6 +3,7 @@
 __pycache__
 app/sensive.py
 app/configlocal.py
+app/__pycache__
 scripts/*
 venv/*
 migrations/*

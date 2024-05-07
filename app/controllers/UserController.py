@@ -1,40 +1,51 @@
-from flask import request, jsonify
+from flask import request, jsonify, json
 from flask_restx import Api, Resource
 from flask import Blueprint
-
 
 from app.models.UserModel import UserModel
 from ..schemas.UserSchema import UserSchema
 from ..schemas.CurriculumSchema import CurriculumSchema
 from ..services.UserServices import *
 
+from app.models.UserModel import UserModel
+from ..schemas.UserSchema import UserSchema
+
 user_api = Blueprint('user_api', __name__)
 api = Api(user_api)
+
+
+# region User
 
 @api.route('/user')
 class UserCreateResource(Resource):
     def post(self):
-        data = request.json
-        user = UserSchema(**data)
+        data = request.get_json()
+        user = UserSchema().load(data)
         user.save()
-        return jsonify(user), 201
+        user_schema = UserSchema().dump(user), 201
+        return user_schema, 201
+    
 
-@api.route('/user/<int:user_id>') 
+@api.route('/user/<int:user_id>')
 class UserResource(Resource):
-    def get(self, id):
-        user = UserModel.query.get_or_404(id)
+    def get(self, user_id):
+        user = UserModel.query.get_or_404(user_id)
         user_schema = UserSchema().dump(user)
         return user_schema, 200
 
-    def put(self, id):
-        user = UserModel.query.get_or_404(id)
-        data = request.json
-        user.update(data)
-        return jsonify(user), 200
-    
-    def delete(self, id):
-        user = UserModel.query.get_or_404(id)
-        user.delete()
+    # def put(self, user_id): 
+    #     user = UserModel.query.get_or_404(id=user_id)
+    #     data = request.json
+    #     user.update(data)
+    #     user_schema = UserSchema().dump(user)
+    #     return user_schema, 200
+
+    # not on swagger
+    def delete(self, user_id):
+        print('inside delete')
+        user = UserModel.query.get_or_404(user_id)
+        print(user)
+        user.delete(user)
         return '', 204
 
 @api.route('/users')
@@ -43,15 +54,23 @@ class UserListResource(Resource):
         users = UserModel.query.all()
         users_schema = UserSchema(many=True).dump(users)
         return users_schema, 200
-    
+
+# endregion
+
+
+
+# region User History
 @api.route('/user/<int:user_id>/history')
 class UserHistoricResource(Resource):
-    def get(self, id):
-        history = get_history_by_user_id(id)
+    def get(self, user_id):
+        history = get_history_by_user_id(user_id)
 
         if not history:
             return None, 404
-        
+
         response = CurriculumSchema(many=True).dump(history)
 
         return response, 200
+# endregion
+
+
