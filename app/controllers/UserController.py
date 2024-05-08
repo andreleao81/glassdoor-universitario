@@ -76,6 +76,16 @@ class UserListResource(Resource):
 # region User History
 @api.route('/user/<int:user_id>/history')
 class UserHistoricResource(Resource):
+    def post(self, user_id):
+        data = request.get_json()
+        history = pocasenior(data)
+
+        if not history:
+            return jsonify({"message": "Curriculum not found"}), 404
+        
+        return history, 200
+
+
     def get(self, user_id):
         history = get_history_by_user_id(user_id)
 
@@ -85,6 +95,17 @@ class UserHistoricResource(Resource):
         response = CurriculumSchema(many=True).dump(history)
 
         return response, 200
+    
+    def put(self, user_id):
+        data = request.json()
+        response = edit_history(user_id, data)
+
+        if not response:
+            return jsonify({"message": "Curriculum not found"}), 404
+        
+        return response, 200
+        
+
 # endregion
 
 
