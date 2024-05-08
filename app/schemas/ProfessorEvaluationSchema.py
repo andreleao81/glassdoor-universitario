@@ -9,6 +9,7 @@ class ProfessorEvaluationSchema(ma.SQLAlchemyAutoSchema):
         include_relationships = True
         load_instance = True
         ordered = True
+        # exclude='create_time','update_time'
 
     id = ma.Integer(dump_only=True)
     

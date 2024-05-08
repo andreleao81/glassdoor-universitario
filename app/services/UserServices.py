@@ -6,16 +6,7 @@ from ..models.CollegeClassModel import CollegeClassModel
 from flask import request, jsonify, json
 from flask_restx import Api, Resource
 
-
-def get_history_by_user_id(userid) -> CurriculumModel:
-    """
-    Get a user's history
-    """
-    history = CurriculumModel.query.filter(
-        CurriculumModel.user_id == userid
-    ).order_by(CurriculumModel.semester).all()
-
-    return history
+#region Curriculum
 
 def create_history(data):
         history = CurriculumSchema().load(data)
@@ -23,8 +14,7 @@ def create_history(data):
         history_schema = CurriculumSchema().dump(history)
         return history_schema
 
-
-def edit_history(userid, data):
+def update_history(userid, data):
     
     classCode = data['class_code']
     curriculum = CurriculumModel.query.filter(
@@ -46,26 +36,36 @@ def edit_history(userid, data):
 
     return response
 
+def get_history_by_user_id(userid) -> CurriculumModel:
+    """
+    Get a user's history
+    """
+    history = CurriculumModel.query.filter(
+        CurriculumModel.user_id == userid
+    ).order_by(CurriculumModel.semester).all()
 
-# def get_history_by_user_id_done(user_id) -> CurriculumModel:
-#     """
-#     Get a user's done history
-#     """
-#     history = CurriculumModel.query.filter(
-#         CurriculumModel.user_id == user_id,
-#         CurriculumModel.conclusion == True
-#     ).all().order_by(CurriculumModel.semester).asc()
+    return history
 
-#     return history
+def get_history_by_user_id_done(user_id) -> CurriculumModel:
+    """
+    Get a user's done history
+    """
+    history = CurriculumModel.query.filter(
+        CurriculumModel.user_id == user_id,
+        CurriculumModel.conclusion == True
+    ).order_by(CurriculumModel.semester).all()
 
-# def get_history_by_user_id_attending(user_id) -> CurriculumModel:
-#     """
-#     Get a user's attending history
-#     """
-#     history = CurriculumModel.query.filter(
-#         CurriculumModel.user_id == user_id,
-#         CurriculumModel.attending == True
-#     ).all().order_by(CurriculumModel.semester).asc()
+    return history
 
-#     return history
+def get_history_by_user_id_attending(user_id) -> CurriculumModel:
+    """
+    Get a user's attending history
+    """
+    history = CurriculumModel.query.filter(
+        CurriculumModel.user_id == user_id,
+        CurriculumModel.attending == True
+    ).order_by(CurriculumModel.semester).all()
 
+    return history
+
+#endregion

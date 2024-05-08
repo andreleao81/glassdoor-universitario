@@ -3,10 +3,11 @@ from app import db
 
 from .CollegeClassModel import CollegeClassModel
 from .UserModel import UserModel
+from .BaseModel import BaseModel
 
 #later curriculum can be a job running at each new insertion of a class_evaluation
 
-class CurriculumModel(db.Model):
+class CurriculumModel(BaseModel):
     __tablename__ = 'classes_history'
 
     id = db.Column(db.Integer, primary_key=True)

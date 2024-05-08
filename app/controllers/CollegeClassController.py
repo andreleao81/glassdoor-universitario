@@ -18,7 +18,7 @@ api = Api(college_class_api)
 @api.route('/college_classes')
 class CollegeClassListResource(Resource): #ok
     def get(self):
-        college_classes = CollegeClassModel.query.all()
+        college_classes = CollegeClassModel.query.order_by(CollegeClassModel.semester).all()
         return CollegeClassSchema(many=True).dump(college_classes), 200
     
 

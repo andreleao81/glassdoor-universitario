@@ -6,8 +6,8 @@ class ProfessorSchema(ma.SQLAlchemyAutoSchema):
         model = ProfessorModel
         load_instance = True
         include_fk = True
-        load_only = ['id']
         include_relationships = True
+        # exclude = 'create_time', 'update_time'
 
     id = ma.Integer(dump_only=True)
     name = ma.String(required=True)
