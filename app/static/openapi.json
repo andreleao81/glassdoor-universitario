@@ -233,7 +233,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CollegeClassSchema"
+                    "$ref": "#/components/schemas/CollegeClass"
                   }
                 }
               }
@@ -603,7 +603,7 @@
             "format": "int64",
             "description": "Professor evaluation ID"
           },
-          "semester": {
+          "semester_concluded": {
             "type": "integer",
             "description": "Semester"
           },
@@ -695,7 +695,7 @@
             "type": "integer",
             "description": "id"
           },
-          "semester": {
+          "semester_concluded": {
             "type": "integer",
             "description": "Semester"
           },
@@ -731,7 +731,7 @@
       "CollegeClassEvaluationPost": {
         "type": "object",
         "properties": {
-          "semester": {
+          "semester_concluded": {
             "type": "integer",
             "description": "Semester"
           },
