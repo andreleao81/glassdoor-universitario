@@ -277,7 +277,18 @@
         "tags": [
           "CollegeClass"
         ],
-        "description": "Returns a list of college class evaluations",
+        "description": "Returns a list of college class evaluations by class ID",
+        "parameters": [
+          {
+        "in": "path",
+        "name": "class_id",
+        "required": true,
+        "description": "Class code",
+        "schema": {
+          "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "List of college class evaluations",
