@@ -189,32 +189,68 @@
       }
     },
     "/user/{user_id}/history": {
+      "post": {
+        "summary": "Create a new history",
+        "responses": {
+          "200": {
+            "description": "History created successfully"
+          },
+          "404": {
+            "description": "Curriculum not found"
+          }
+        }
+      },
       "get": {
-        "tags": [
-          "User History"
-        ],
-        "description": "Returns a  hstory by user ID",
+        "summary": "Get a user's history",
         "parameters": [
           {
-        "in": "path",
-        "name": "user_id",
-        "required": true,
-        "description": "User ID",
-        "schema": {
-          "type": "integer"
-        }
+            "name": "done",
+            "in": "query",
+            "description": "Filter by concluded",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "doing",
+            "in": "query",
+            "description": "Filter by attending",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "description": "User ID",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-        "description": "User history",
-        "content": {
-          "application/json": {
-            "schema": {
-          "$ref": "#/components/schemas/History"
-            }
+            "description": "History retrieved successfully"
+          },
+          "400": {
+            "description": "You can't filter both concluded and attending"
+          },
+          "404": {
+            "description": "No history found"
           }
         }
+      },
+      "put": {
+        "summary": "Update a user's history",
+        "responses": {
+          "200": {
+            "description": "History updated successfully"
+          },
+          "404": {
+            "description": "Curriculum not found"
           }
         }
       }
@@ -576,12 +612,22 @@
             "type": "string",
             "description": "Professor name"
           },
-          "email": {
-            "type": "string",
-            "description": "Professor email"
+          "rating": {
+            "type": "number",
+            "description": "Professor rating"
           }
         },
-        "required": ["name", "email"]
+        "required": ["name"]
+      },
+      "ProfessorPost": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Professor name"
+          }
+        },
+        "required": ["name"]
       },
       "CollegeClass": {
         "type": "object",

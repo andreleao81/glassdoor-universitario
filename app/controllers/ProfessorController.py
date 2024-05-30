@@ -21,8 +21,8 @@ api = Api(professor_api)
 @api.route('/professors')
 class ProfessorListResource(Resource):
     def get(self):
-        professors = ProfessorModel.query.all()
-        return ProfessorSchema(many=True).dump(professors)
+        professors = ProfessorModel.query.order_by(ProfessorModel.name).all()
+        return ProfessorSchema(many=True, exclude=(['professor_evaluations'])).dump(professors)
 
 # ----------------- EVALUATION -----------------
 

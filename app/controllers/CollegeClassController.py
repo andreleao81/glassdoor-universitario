@@ -39,19 +39,28 @@ class CollegeClassEvaluationCreateResource(Resource): #ok
         data = request.get_json()
 
         if data is None:
-            print('aborting')
-            abort(400, 'No data provided')
+            return data, 400
+        try:
+            schema = CollegeClassEvaluationSchema()
+            eval = schema.load(data)
+            eval.save()
+            response = CollegeClassEvaluationSchema().dump(eval)
+        except Exception as e:
+            return {"Error": str(e)}, 400
 
-        response = create_class_eval(data)
         return response, 201
     
 @api.route('/college_class/<string:class_id>/evaluation/<int:user_id>/<int:professor_id>') #ok
 class CollegeClassEvaluationResource(Resource): #ok
     def get(self, class_id, user_id, professor_id):
-        class_eval = get_class_eval(class_id, user_id, professor_id) 
-        
-        if class_eval is None:
-            return None, 404
+
+        try:
+            class_eval = get_class_eval(class_id, user_id, professor_id) 
+            
+            if class_eval is None:
+                return None, 404
+        except Exception as e:
+            return {"Error": str(e)}, 400
         
         response = CollegeClassEvaluationSchema().dump(class_eval)
         return response, 200

@@ -27,7 +27,31 @@ class ProfessorEvaluationModel(BaseModel):
     professor_id = db.Column(db.Integer, db.ForeignKey('professors.id'), nullable=False, index=True)
     professor = db.Relationship(ProfessorModel, backref='professor_evaluations')
 
+    @classmethod
+    def update_rating_after_insert_or_update(cls):
+        """
+        Update the rating of a professor after an insert or update
+        """
+
+        evaluations = ProfessorEvaluationModel.query.filter_by(professor_id=cls.professor_id).all()
+        if evaluations:
+            # Extract ratings using zip and calculate the total sum using map and sum
+            total_scores = sum(
+                            map(
+                                sum, zip(
+                                    *[(eval.attendance, eval.punctuality, eval.availability_questions,
+                                                eval.student_relationship, eval.professor_methodology)
+                                                    for eval in evaluations
+                                        ]
+                                    )
+                                )
+                            )
+
+        total_possible = len(evaluations) * 5
+        new_rating = total_scores / total_possible
+        cls.professor.rating = new_rating
+
+        db.session.commit()
 
 
-
-    
+        

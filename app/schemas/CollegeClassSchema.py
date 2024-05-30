@@ -12,3 +12,4 @@ class CollegeClassSchema(ma.SQLAlchemySchema):
     name = ma.String(required=True)
     class_code = ma.String(required=True)
     semester = ma.String(required=True)
+    rating = ma.Float()

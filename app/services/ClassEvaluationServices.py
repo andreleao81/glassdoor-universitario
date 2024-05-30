@@ -5,10 +5,10 @@ def create_class_eval(data):
     """
     Create a new class evaluation
     """
-    schema = CollegeClassEvaluationSchema()
-    college_class_evaluation = schema.load(data)
+    
+    college_class_evaluation = data
     college_class_evaluation.save()
-    return CollegeClassEvaluationSchema().dump(college_class_evaluation)
+    return college_class_evaluation
 
 
 

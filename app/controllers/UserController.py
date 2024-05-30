@@ -86,12 +86,24 @@ class UserHistoricResource(Resource):
         return history, 200
 
     def get(self, user_id):
-        history = get_history_by_user_id(user_id)
+        done_arg = request.args.get('done', '')
+        doing_arg = request.args.get('doing', '')
 
-        if not history:
-            return None, 404
+        try:
+            concluded = validate_bool_arg(done_arg)
+            attending = validate_bool_arg(doing_arg)
+            
+            if concluded and attending:
+                return "Cannot be both done and doing", 400
+            
+            history = get_history_by_user_id(user_id, concluded, attending)
 
-        response = CurriculumSchema(many=True).dump(history)
+            if not history:
+                return None, 404
+            
+            response = CurriculumSchema(many=True).dump(history)
+        except Exception as e:
+            return jsonify({"message": str(e)}), 400
 
         return response, 200
     
@@ -108,3 +120,17 @@ class UserHistoricResource(Resource):
 # endregion
 
 
+#region Validation
+def validate_bool_arg(arg, **kwargs):
+    param = arg.lower()
+    
+    if param == 'true':
+        return True
+    if param == 'false':
+        return False
+    if param == '':
+        return None
+    
+    return TypeError('Invalid boolean argument')
+
+#endregion
