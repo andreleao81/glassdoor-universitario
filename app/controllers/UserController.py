@@ -33,7 +33,9 @@ class UserLoginResource(Resource):
         user = UserModel.query.filter_by(username=data['username']).first()
         if user and user.check_password(data['password']):
             #né segredo
-            return {'message': "Ceci n'est pas un token"}, 200 
+            return {'message': "Ceci n'est pas un token",
+                    "user_id": user.id
+                    }, 200 
         return {'message': 'Invalid credentials'}, 401
     
 # endregion
