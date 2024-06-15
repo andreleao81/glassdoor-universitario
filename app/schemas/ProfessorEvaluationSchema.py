@@ -16,7 +16,7 @@ class ProfessorEvaluationSchema(ma.SQLAlchemyAutoSchema):
     
     semester = ma.Integer(required=True)
     
-    attendance = ma.Integer(required=True)
+    attendance = ma.Boolean(required=True)
     punctuality = ma.Integer(required=True)
     availability_questions = ma.Integer(required=True)
     student_relationship = ma.Integer(required=True)

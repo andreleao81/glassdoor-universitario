@@ -17,8 +17,6 @@ class CollegeClassEvaluationModel(BaseModel):
     curriculum_exam_alingment = db.Column(db.Integer, nullable=False)
     difficulty = db.Column(db.Integer, nullable=False)
 
-    rating = db.Column(db.Float, nullable=True, default=0.0)
-
     class_code = db.Column(db.String(10), db.ForeignKey('college_classes.class_code'), nullable=False, index=True)
     college_class = db.Relationship(CollegeClassModel, backref='class_evaluations') 
     

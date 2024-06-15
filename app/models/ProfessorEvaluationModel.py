@@ -12,7 +12,7 @@ class ProfessorEvaluationModel(BaseModel):
     
     semester = db.Column(db.Integer, nullable=False)
     
-    attendance = db.Column(db.Integer, nullable=False)
+    attendance = db.Column(db.Boolean, default=False, nullable=False)
     punctuality = db.Column(db.Integer, nullable=False)
     availability_questions = db.Column(db.Integer, nullable=False)
     student_relationship = db.Column(db.Integer, nullable=False)
@@ -39,7 +39,7 @@ class ProfessorEvaluationModel(BaseModel):
             total_scores = sum(
                             map(
                                 sum, zip(
-                                    *[(eval.attendance, eval.punctuality, eval.availability_questions,
+                                    *[(eval.punctuality, eval.availability_questions,
                                                 eval.student_relationship, eval.professor_methodology)
                                                     for eval in evaluations
                                         ]
