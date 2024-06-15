@@ -28,9 +28,9 @@ class ProfessorEvaluationModel(BaseModel):
     professor = db.Relationship(ProfessorModel, backref='professor_evaluations')
 
     @classmethod
-    def update_rating_after_insert_or_update(cls):
+    def update_professor_after_insert_or_update(cls):
         """
-        Update the rating of a professor after an insert or update
+        Update professor model after an insert or update
         """
 
         evaluations = ProfessorEvaluationModel.query.filter_by(professor_id=cls.professor_id).all()
@@ -46,10 +46,12 @@ class ProfessorEvaluationModel(BaseModel):
                                     )
                                 )
                             )
+        last_eval = evaluations.order_by(ProfessorEvaluationModel.update_time.desc()).first()
 
         total_possible = len(evaluations) * 5
         new_rating = total_scores / total_possible
         cls.professor.rating = new_rating
+        cls.professor.attendance = last_eval.attendance
 
         db.session.commit()
 
