@@ -665,8 +665,12 @@
             "description": "Semester"
           },
           "attendance": {
-            "type": "integer",
+            "type": "boolean",
             "description": "Attendance"
+          },
+          "individual_rating": {
+            "type": "integer",
+            "description": "Rating of the individual"
           },
           "punctuality": {
             "type": "integer",
@@ -709,8 +713,12 @@
             "description": "Semester"
           },
           "attendance": {
+            "type": "boolean",
+            "description": "Rating of the individual"
+          },
+          "individual_rating": {
             "type": "integer",
-            "description": "Attendance"
+            "description": "Rating of the individual"
           },
           "punctuality": {
             "type": "integer",
@@ -756,6 +764,10 @@
             "type": "integer",
             "description": "Semester"
           },
+          "individual_rating": {
+            "type": "integer",
+            "description": "Rating of the individual"
+          },
           "lesson_exam_alingment": {
             "type": "integer",
             "description": "Lesson exam alignment"
@@ -791,6 +803,10 @@
           "semester_concluded": {
             "type": "integer",
             "description": "Semester"
+          },
+          "individual_rating": {
+            "type": "integer",
+            "description": "Rating of the individual"
           },
           "lesson_exam_alingment": {
             "type": "integer",

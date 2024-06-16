@@ -16,6 +16,8 @@ class CollegeClassEvaluationModel(BaseModel):
     lesson_exam_alingment = db.Column(db.Integer, nullable=False)
     curriculum_exam_alingment = db.Column(db.Integer, nullable=False)
     difficulty = db.Column(db.Integer, nullable=False)
+    individual_rating = db.Column(db.Integer, nullable=False)
+
 
     class_code = db.Column(db.String(10), db.ForeignKey('college_classes.class_code'), nullable=False, index=True)
     college_class = db.Relationship(CollegeClassModel, backref='class_evaluations') 
@@ -40,14 +42,15 @@ class CollegeClassEvaluationModel(BaseModel):
                                 sum, zip(
                                     *[(eval.lesson_exam_alingment, 
                                        eval.curriculum_exam_alingment, 
-                                       eval.difficulty)
+                                       eval.difficulty,
+                                       eval.individual_rating*3)
                                                     for eval in evaluations
                                         ]
                                     )
                                 )
                             )
 
-        total_possible = len(evaluations) * 5
+        total_possible = len(evaluations) *(3*5 + 3*5)
         new_rating = total_scores / total_possible
         cls.college_class.rating = new_rating
 

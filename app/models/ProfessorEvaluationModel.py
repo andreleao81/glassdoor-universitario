@@ -13,10 +13,13 @@ class ProfessorEvaluationModel(BaseModel):
     semester = db.Column(db.Integer, nullable=False)
     
     attendance = db.Column(db.Boolean, default=False, nullable=False)
+
     punctuality = db.Column(db.Integer, nullable=False)
     availability_questions = db.Column(db.Integer, nullable=False)
     student_relationship = db.Column(db.Integer, nullable=False)
     professor_methodology = db.Column(db.Integer, nullable=False)
+
+    individual_rating = db.Column(db.Integer, nullable=False)
    
     class_code = db.Column(db.String(10), db.ForeignKey('college_classes.class_code'), nullable=False, index=True)
     college_class = db.Relationship(CollegeClassModel, backref='professor_evaluations') 
@@ -40,15 +43,17 @@ class ProfessorEvaluationModel(BaseModel):
                             map(
                                 sum, zip(
                                     *[(eval.punctuality, eval.availability_questions,
-                                                eval.student_relationship, eval.professor_methodology)
+                                                eval.student_relationship, eval.professor_methodology,
+                                                eval.individual_rating*3)
                                                     for eval in evaluations
                                         ]
                                     )
                                 )
                             )
+            
         last_eval = evaluations.order_by(ProfessorEvaluationModel.update_time.desc()).first()
 
-        total_possible = len(evaluations) * 5
+        total_possible = len(evaluations) * (4*5 +3*5)
         new_rating = total_scores / total_possible
         cls.professor.rating = new_rating
         cls.professor.attendance = last_eval.attendance

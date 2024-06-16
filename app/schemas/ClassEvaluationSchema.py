@@ -19,6 +19,7 @@ class CollegeClassEvaluationSchema(ma.SQLAlchemyAutoSchema):
     lesson_exam_alingment = ma.Integer(required=True)
     curriculum_exam_alingment = ma.Integer(required=True)
     difficulty = ma.Integer(required=True)
+    individual_rating = ma.Integer(required=True)
    
     class_code = ma.String(required=True)
     user_id = ma.Integer(required=True)

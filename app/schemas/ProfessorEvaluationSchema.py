@@ -21,6 +21,7 @@ class ProfessorEvaluationSchema(ma.SQLAlchemyAutoSchema):
     availability_questions = ma.Integer(required=True)
     student_relationship = ma.Integer(required=True)
     professor_methodology = ma.Integer(required=True)
+    individual_rating = ma.Integer(required=True)   
 
     class_code = ma.String(required=True)
     user_id = ma.Integer(required=True)
