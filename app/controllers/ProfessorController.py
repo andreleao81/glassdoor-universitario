@@ -5,7 +5,7 @@ from app.models.ProfessorModel import ProfessorModel
 from ..schemas.ProfessorSchema import ProfessorSchema
 
 from app.models.ProfessorEvaluationModel import ProfessorEvaluationModel
-from ..schemas.ProfessorEvaluationSchema import ProfessorEvaluationSchema
+from ..schemas.ProfessorEvaluationSchema import ProfessorEvaluationSchema, ProfessorEvaluationPostSchema
 
 from app.services.ProfessorServices import *
 
@@ -36,7 +36,7 @@ class ProfessorEvaluationListResource(Resource):
 class ProfessorEvaluationCreateResource(Resource):
     def post(self):
         data = request.get_json()
-        professor_evaluation = ProfessorEvaluationSchema().load(data)
+        professor_evaluation = ProfessorEvaluationPostSchema().load(data)
         professor_evaluation.save()
         return ProfessorEvaluationSchema().dump(professor_evaluation), 201
 

@@ -29,8 +29,8 @@ class ProfessorEvaluationSchema(ma.SQLAlchemyAutoSchema):
 
     #forces class_code when creating or updating a new evaluation to be a string upper
     @post_load
-    def make_upper(self, data):
-        data['class_code'] = data['class_code'].upper()
+    def make_upper(self, data, many, **kwargs):
+        data.class_code = data.class_code.upper()
         return data
     
     @validates('class_code')
