@@ -44,7 +44,6 @@ class CollegeClassEvaluationCreateResource(Resource): #ok
             schema = CollegeClassEvaluationSchema()
             eval = schema.load(data)
             eval.save()
-            print('saved')
             eval.update_class()
             response = CollegeClassEvaluationSchema().dump(eval)
         except Exception as e:

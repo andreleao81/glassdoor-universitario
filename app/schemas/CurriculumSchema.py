@@ -12,13 +12,7 @@ class CurriculumSchema(ma.SQLAlchemySchema):
     class_code = ma.String(required=True)
     semester = ma.String(required=True)
     conclusion = ma.Boolean(required=True, default=False)
-    attending = ma.Boolean(required=True, default=True)
     user_id = ma.Integer(required=True)
-
-    @validates_schema
-    def validate_attending_concluded(self, **kwargs):
-        if self.attending and self.conclusion:
-            raise ValueError('A class cannot be both attending and concluded')
         
     @validates('semester')
     def validate_semester(self, value, **kwargs):

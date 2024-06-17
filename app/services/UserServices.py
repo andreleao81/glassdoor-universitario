@@ -36,14 +36,27 @@ def update_history(userid, data):
 
     return response
 
-def get_history_by_user_id(user_id, concluded, attending) -> CurriculumModel:
+def get_history_by_user_id(user_id, concluded) -> CurriculumModel:
     """
     Get a user's history
     """
+    if concluded == None:
+        historyDone = CurriculumModel.query.filter(
+            CurriculumModel.user_id == user_id,
+            CurriculumModel.conclusion == True
+        ).order_by(CurriculumModel.semester).all()
+
+        historyNotDone= CurriculumModel.query.filter(
+            CurriculumModel.user_id == user_id,
+            CurriculumModel.conclusion == False
+        ).order_by(CurriculumModel.semester).all()
+        
+        history = historyDone, historyNotDone
     
-    if not concluded and not attending:
+    if not concluded:
         history = CurriculumModel.query.filter(
-            CurriculumModel.user_id == user_id
+            CurriculumModel.user_id == user_id,
+            CurriculumModel.conclusion == False
         ).order_by(CurriculumModel.semester).all()
 
     if concluded:
@@ -52,16 +65,6 @@ def get_history_by_user_id(user_id, concluded, attending) -> CurriculumModel:
             CurriculumModel.conclusion == concluded
         ).order_by(CurriculumModel.semester).all()
 
-    if attending:
-        history = CurriculumModel.query.filter(
-            CurriculumModel.user_id == user_id,
-            CurriculumModel.attending == attending
-        ).order_by(CurriculumModel.semester).all()
-
-    # if not attending and not concluded:
-    #     history = CurriculumModel.query.filter(
-    #         CurriculumModel.user_id == user_id,
-    #     ).order_by(CurriculumModel.semester).all()
         
 
     return history

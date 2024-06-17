@@ -89,16 +89,20 @@ class UserHistoricResource(Resource):
 
     def get(self, user_id):
         done_arg = request.args.get('done', '')
-        doing_arg = request.args.get('doing', '')
 
         try:
             concluded = validate_bool_arg(done_arg)
-            attending = validate_bool_arg(doing_arg)
+            if concluded is None: #get all
+                history = get_history_by_user_id(user_id, concluded)
+
+                if not history:
+                    return None, 404
+                
+                response ={'Done': CurriculumSchema(many=True).dump(history[0]),
+                           'NotDone': CurriculumSchema(many=True).dump(history[1])}
+                return response, 200
             
-            if concluded and attending:
-                return "Cannot be both done and doing", 400
-            
-            history = get_history_by_user_id(user_id, concluded, attending)
+            history = get_history_by_user_id(user_id, concluded)
 
             if not history:
                 return None, 404
@@ -131,6 +135,8 @@ def validate_bool_arg(arg, **kwargs):
     if param == 'false':
         return False
     if param == '':
+        return None
+    if not param:
         return None
     
     return TypeError('Invalid boolean argument')

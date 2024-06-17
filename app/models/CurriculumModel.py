@@ -13,7 +13,6 @@ class CurriculumModel(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     semester = db.Column(db.Integer, nullable=False)
     conclusion = db.Column(db.Boolean, nullable=False)
-    attending = db.Column(db.Boolean, nullable=False)
     class_code = db.Column(db.String(10), db.ForeignKey('college_classes.class_code'), nullable=False, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
     
