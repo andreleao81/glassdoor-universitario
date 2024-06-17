@@ -3,6 +3,8 @@ from .BaseModel import BaseModel
 from .ProfessorModel import ProfessorModel
 from .UserModel import UserModel
 from .CollegeClassModel import CollegeClassModel
+from ..extensions import db
+from sqlalchemy import event
 
 
 
@@ -30,35 +32,35 @@ class ProfessorEvaluationModel(BaseModel):
     professor_id = db.Column(db.Integer, db.ForeignKey('professors.id'), nullable=False, index=True)
     professor = db.Relationship(ProfessorModel, backref='professor_evaluations')
 
-    @classmethod
-    def update_professor_after_insert_or_update(cls):
+    def update_prof(self):
         """
         Update professor model after an insert or update
         """
 
-        evaluations = ProfessorEvaluationModel.query.filter_by(professor_id=cls.professor_id).all()
+        evaluations = ProfessorEvaluationModel.query.filter_by(professor_id=self.professor_id).all()
+        total_scores = 0
         if evaluations:
             # Extract ratings using zip and calculate the total sum using map and sum
             total_scores = sum(
                             map(
                                 sum, zip(
                                     *[(eval.punctuality, eval.availability_questions,
-                                                eval.student_relationship, eval.professor_methodology,
-                                                eval.individual_rating*3)
-                                                    for eval in evaluations
-                                        ]
-                                    )
+                                            eval.student_relationship, eval.professor_methodology,
+                                            eval.individual_rating*3 if eval.individual_rating else 0)
+                                                for eval in evaluations
+                                    ]
                                 )
                             )
-            
-        last_eval = evaluations.order_by(ProfessorEvaluationModel.update_time.desc()).first()
-
-        total_possible = len(evaluations) * (4*5 +3*5)
-        new_rating = total_scores / total_possible
-        cls.professor.rating = new_rating
-        cls.professor.attendance = last_eval.attendance
-
-        db.session.commit()
-
-
+                        )
         
+
+        last_eval = ProfessorEvaluationModel.query.filter_by(professor_id=self.professor_id).order_by(ProfessorEvaluationModel.update_time.desc()).first()
+        if last_eval:
+            total_possible = len(evaluations) * (4*5 +3*5)
+            new_rating = total_scores / total_possible
+            self.professor.rating = round(new_rating, 2)
+            self.professor.attendance = last_eval.attendance
+            db.session.commit()
+            return
+
+    
