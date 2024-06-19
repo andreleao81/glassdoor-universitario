@@ -29,8 +29,8 @@ class CurriculumSchema(ma.SQLAlchemySchema):
 class CompleteHistorySchema(Schema):
     user_id = fields.Int(required=True)
     class_code = fields.Str(required=True)
-    conclusion_semester = fields.Str(required=True)
-    default_semester = fields.Str(required=True)
+    conclusion_semester = fields.Int(required=True)
+    default_semester = fields.Int(required=True)
     conclusion = fields.Bool(required=True)
     name = fields.Str(required=True)
     rating = fields.Float(required=True)
