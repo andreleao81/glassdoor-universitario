@@ -38,7 +38,7 @@ class ProfessorEvaluationCreateResource(Resource):
         data = request.get_json()
         professor_evaluation = ProfessorEvaluationPostSchema().load(data)
         professor_evaluation.save()
-        professor_evaluation.update_prof_after_change_on_database()
+        professor_evaluation.update_prof()
         return ProfessorEvaluationSchema().dump(professor_evaluation), 201
 
 @api.route('/professor/<int:prof_id>/evaluation/<string:class_id>/<int:user_id>')
