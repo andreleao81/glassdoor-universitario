@@ -30,11 +30,11 @@ def update_history(userid, data):
 
     
     schema = CurriculumSchema()
-    curriculum = schema().load(data, instance=curriculum, partial=True)
+    curriculum = schema.load(data, instance=curriculum, partial=True)
     curriculum.save()
 
 
-    response = schema().dump(curriculum)
+    response = schema.dump(curriculum)
 
 
     return response
