@@ -74,7 +74,7 @@ def get_complete_history(userId, conclusion=None):
             'class_code': record[1],
             'conclusion_semester': record[2],
             'default_semester': record[3],
-            'conclusion': record[4]
+            'conclusion': record[4],
             'name': record[5],
             'rating': record[6]
         }
