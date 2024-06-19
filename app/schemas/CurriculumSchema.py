@@ -32,4 +32,6 @@ class CompleteHistorySchema(Schema):
     conclusion_semester = fields.Str(required=True)
     default_semester = fields.Str(required=True)
     conclusion = fields.Bool(required=True)
+    name = fields.Str(required=True)
+    rating = fields.Float(required=True)
     

@@ -53,7 +53,9 @@ def get_complete_history(userId, conclusion=None):
         CollegeClassModel.class_code,
         CurriculumModel.conclusion_semester,
         CollegeClassModel.default_semester,
-        CurriculumModel.conclusion
+        CurriculumModel.conclusion,
+        CollegeClassModel.name,
+        CollegeClassModel.rating
     ).outerjoin(
         CollegeClassModel,
         CurriculumModel.class_code == CollegeClassModel.class_code
@@ -73,6 +75,8 @@ def get_complete_history(userId, conclusion=None):
             'conclusion_semester': record[2],
             'default_semester': record[3],
             'conclusion': record[4]
+            'name': record[5],
+            'rating': record[6]
         }
         for record in complete_history
     ]

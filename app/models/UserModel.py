@@ -27,12 +27,10 @@ class UserModel(BaseModel):
         #query only the ids, not the whole object
         class_codes = CollegeClassModel.query.with_entities(CollegeClassModel.class_code).all()
 
-        print(class_codes)
         data = [
                 {'conclusion': False, 'class_code': class_code[0], 'user_id': self.id}
                 for class_code in class_codes
                 ]
-        print(data)
 
         # Bulk insert the data
         try:
