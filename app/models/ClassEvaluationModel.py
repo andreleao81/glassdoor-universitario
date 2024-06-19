@@ -33,7 +33,6 @@ class CollegeClassEvaluationModel(BaseModel):
         """
         Update the rating after an insert or update
         """
-        print('inside update class')
         evaluations = CollegeClassEvaluationModel.query.filter_by(class_code=cls.class_code).all()
         if evaluations:
             # Extract ratings using zip and calculate the total sum using map and sum
@@ -50,7 +49,7 @@ class CollegeClassEvaluationModel(BaseModel):
                                 )
                             )
 
-            total_possible = len(evaluations) *(3*5 + 3*5)
+            total_possible = len(evaluations) * 6
             new_rating = total_scores / total_possible
             cls.college_class.rating = round(new_rating,2)
 

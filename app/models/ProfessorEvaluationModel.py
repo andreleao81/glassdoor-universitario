@@ -56,7 +56,7 @@ class ProfessorEvaluationModel(BaseModel):
 
         last_eval = ProfessorEvaluationModel.query.filter_by(professor_id=self.professor_id).order_by(ProfessorEvaluationModel.update_time.desc()).first()
         if last_eval:
-            total_possible = len(evaluations) * (4*5 +3*5)
+            total_possible = len(evaluations) * 7
             new_rating = total_scores / total_possible
             self.professor.rating = round(new_rating, 2)
             self.professor.attendance = last_eval.attendance
