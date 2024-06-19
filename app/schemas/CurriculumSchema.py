@@ -1,6 +1,6 @@
 from ..models.CurriculumModel import CurriculumModel
 from ..extensions import ma
-from marshmallow import ValidationError, validates, post_load, validates_schema, validates
+from marshmallow import ValidationError, validates, post_load, validates_schema, validates, fields, Schema
 
 class CurriculumSchema(ma.SQLAlchemySchema):
     class Meta:
@@ -24,4 +24,12 @@ class CurriculumSchema(ma.SQLAlchemySchema):
         data.class_code = data.class_code.upper()
         return data
     
+
+
+class CompleteHistorySchema(Schema):
+    user_id = fields.Int(required=True)
+    class_code = fields.Str(required=True)
+    conclusion_semester = fields.Str(required=True)
+    default_semester = fields.Str(required=True)
+    conclusion = fields.Bool(required=True)
     

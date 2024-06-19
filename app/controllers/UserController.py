@@ -7,9 +7,6 @@ from ..schemas.UserSchema import UserSchema
 from ..schemas.CurriculumSchema import CurriculumSchema
 from ..services.UserServices import *
 
-from app.models.UserModel import UserModel
-from ..schemas.UserSchema import UserSchema
-
 user_api = Blueprint('user_api', __name__)
 api = Api(user_api)
 
@@ -23,7 +20,14 @@ class UserCreateResource(Resource):
         data = request.get_json()
         user = UserSchema().load(data)
         user.save()
+
+        try:
+            user.create_all_history()
+        except Exception as e:
+            return jsonify({"message": str(e)}), 500
+        
         user_schema = UserSchema().dump(user)
+        
         return user_schema, 201
     
 @api.route('/login')
@@ -92,22 +96,22 @@ class UserHistoricResource(Resource):
 
         try:
             concluded = validate_bool_arg(done_arg)
+            historyDone, historyNotDone = get_complete_history(user_id, concluded)
+
             if concluded is None: #get all
-                history = get_history_by_user_id(user_id, concluded)
+                if not historyDone and not historyNotDone:  
+                    return None, 200
 
-                if not history:
-                    return None, 404
                 
-                response ={'Done': CurriculumSchema(many=True).dump(history[0]),
-                           'NotDone': CurriculumSchema(many=True).dump(history[1])}
-                return response, 200
-            
-            history = get_history_by_user_id(user_id, concluded)
-
-            if not history:
-                return None, 404
-            
-            response = CurriculumSchema(many=True).dump(history)
+                response ={'Done': historyDone,
+                           'NotDone': historyNotDone}
+                #historyDone and historyNotDone are already on schema format
+            else:                
+                history = historyDone if concluded else historyNotDone
+                if not history:
+                    return None, 200
+                
+                response = history #historyDone and historyNotDone are already on schema format
         except Exception as e:
             return jsonify({"message": str(e)}), 400
 

@@ -206,16 +206,7 @@
           {
             "name": "done",
             "in": "query",
-            "description": "Filter by concluded",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          {
-            "name": "doing",
-            "in": "query",
-            "description": "Filter by attending",
+            "description": "Filter by concluded - if None, get all",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -235,11 +226,8 @@
           "200": {
             "description": "History retrieved successfully"
           },
-          "400": {
-            "description": "You can't filter both concluded and attending"
-          },
           "404": {
-            "description": "No history found"
+            "description": "User id not  found"
           }
         }
       },
@@ -836,6 +824,61 @@
           }
         },
         "required": ["semester", "lesson_exam_alingment", "curriculum_exam_alingment", "difficulty", "class_code", "user_id", "professor_id"]
+      },
+      "CurriculumSchema": {
+          "type": "object",
+          "properties": {
+              "id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Curriculum ID"
+              },
+              "class_code": {
+                  "type": "string",
+                  "description": "Class code"
+              },
+              "semester": {
+                  "type": "string",
+                  "description": "Semester"
+              },
+              "conclusion": {
+                  "type": "boolean",
+                  "description": "Conclusion"
+              },
+              "user_id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "User ID"
+              }
+          },
+          "required": ["class_code", "semester", "conclusion", "user_id"]
+      },
+      "CompleteHistorySchema": {
+          "type": "object",
+          "properties": {
+              "user_id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "User ID"
+              },
+              "class_code": {
+                  "type": "string",
+                  "description": "Class code"
+              },
+              "conclusion_semester": {
+                  "type": "string",
+                  "description": "Conclusion semester"
+              },
+              "default_semester": {
+                  "type": "string",
+                  "description": "Default semester"
+              },
+              "conclusion": {
+                  "type": "boolean",
+                  "description": "Conclusion"
+              }
+          },
+          "required": ["user_id", "class_code", "conclusion_semester", "default_semester", "conclusion"]
       }
     }
   }
