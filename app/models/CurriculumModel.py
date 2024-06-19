@@ -24,9 +24,9 @@ class CurriculumModel(BaseModel):
 
    
     def validate_semester(self):
-        if self.semester != None:
-            if self.semester < 1:
+        if self.conclusion_semester != None:
+            if self.conclusion_semester < 1:
                 raise ValueError('Semester must be greater than 0')
-            if self.semester > 20:
+            if self.conclusion_semester > 20:
                 raise ValueError('Semester must be less than 20')
             
