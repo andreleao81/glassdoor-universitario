@@ -14,7 +14,7 @@ class CurriculumSchema(ma.SQLAlchemySchema):
     conclusion = ma.Boolean(required=True, default=False)
     user_id = ma.Integer(required=True)
         
-    @validates('semester')
+    @validates('conclusion_semester')
     def validate_semester(self, value, **kwargs):
         if not 1 <= int(value) <= 20:
             raise ValidationError('Semester must be greater than 0')
