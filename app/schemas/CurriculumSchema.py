@@ -10,7 +10,7 @@ class CurriculumSchema(ma.SQLAlchemySchema):
     
     id = ma.Integer(dump_only=True)
     class_code = ma.String(required=True)
-    semester = ma.String(required=True)
+    conclusion_semester = ma.String(required=True)
     conclusion = ma.Boolean(required=True, default=False)
     user_id = ma.Integer(required=True)
         
